@@ -23,7 +23,7 @@ class LoginTest {
     @BeforeEach
     void beforeEach(){
         this.browser = new ChromeDriver();
-        browser.navigate().to(URL_LOGIN);
+        this.browser.navigate().to(URL_LOGIN);
     }
 
     @AfterEach
@@ -51,5 +51,13 @@ class LoginTest {
         Assert.assertTrue(browser.getCurrentUrl().equals("http://localhost:8080/login?error"));
         Assert.assertTrue(browser.getPageSource().contains("Usuário e senha inválidos."));
         Assert.assertThrows(NoSuchElementException.class,() -> browser.findElement(By.id("usuario-logado")).getText());
+    }
+
+    @Test
+    void naoDeveriaAcessarPaginaRestritaSemEstarLogado(){
+        browser.navigate().to("http://localhost:8080/leiloes/2");
+
+        Assert.assertTrue(browser.getCurrentUrl().equals(URL_LOGIN));
+        Assert.assertFalse(browser.getPageSource().contains("Dados do Leilão"));
     }
 }
