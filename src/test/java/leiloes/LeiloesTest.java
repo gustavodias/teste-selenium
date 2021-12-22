@@ -6,45 +6,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 class LeiloesTest {
 
-    private LoginPage loginPage;
-
-    @BeforeEach
-    void beforeEach(){
-        this.loginPage = new LoginPage();
-    }
+    private LeiloesPage leiloesPage;
 
     @AfterEach
     void afterEach(){
-        this.loginPage.fechar();
+        this.leiloesPage.fechar();
     }
 
     @Test
-    void deveriaEfetuarLoginComDadosValidos(){
+    void deveriaCadastrarLeilao(){
+        LoginPage loginPage = new LoginPage();
         loginPage.preencheFormularioDeLogin("fulano", "pass");
-        loginPage.efetuarLogin();
+        this.leiloesPage = loginPage.efetuarLogin();
+        leiloesPage.carregarFormulario();
+        CadastroLeilaoPage cadastroLeilaoPage =leiloesPage.carregarFormulario();
 
-        Assert.assertFalse(loginPage.isPaginaDeLogin());
-        Assert.assertEquals("fulano", loginPage.getNomeUsuarioLogado());
-    }
+        String hoje = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String nome = "Leilao do dia "+hoje;
+        String valor = "500.00";
 
-    @Test
-    void naoDeveriaEfetuarLoginComDadosInvalidos(){
-        loginPage.preencheFormularioDeLogin("invalido", "123");
-        loginPage.efetuarLogin();
+        this.leiloesPage = cadastroLeilaoPage.cadastrarLeilao(nome,valor,hoje);
 
-        Assert.assertTrue(loginPage.isPaginaDeLoginComDadosInvalidos());
-        Assert.assertNull(loginPage.getNomeUsuarioLogado());
-        Assert.assertTrue(loginPage.contemTexto("Usuário e senha inválidos."));
-    }
-
-    @Test
-    void naoDeveriaAcessarPaginaRestritaSemEstarLogado(){
-        loginPage.navegaParaPaginaDeLances();
-
-
-        Assert.assertTrue(loginPage.isPaginaDeLogin());
-        Assert.assertFalse(loginPage.contemTexto("Dados do Leilão"));
+        Assert.assertTrue(leiloesPage.isLeilaoCadastrado(nome, valor, hoje));
     }
 }
