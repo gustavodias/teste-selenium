@@ -5,7 +5,7 @@
 		
 		<div class="container">
 			<div th:replace="~{base :: titulo('Novo Leilão')}"></div>
-			<form th:action="@{/leiloes}" method="post" th:object="${leilao}" class="card-body">
+			<form th:action="@{'/leiloes'}" method="post" th:object="${leilao}" class="card-body">
 				<input th:field="*{id}" type="hidden">
 		
 				<div class="form-group">
