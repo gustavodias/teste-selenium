@@ -1,6 +1,6 @@
-package leiloes;
+package br.com.alura.leilao.leiloes;
 
-import login.LoginPage;
+import br.com.alura.leilao.login.LoginPage;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +17,7 @@ class LeiloesTest {
     @BeforeEach
     void beforeEach(){
         LoginPage loginPage = new LoginPage();
-        loginPage.preencheFormularioDeLogin("fulano", "pass");
-        this.leiloesPage = loginPage.efetuarLogin();
+        this.leiloesPage = loginPage.efetuarLogin("fulano", "pass");
         leiloesPage.carregarFormulario();
         this.cadastroLeilaoPage = leiloesPage.carregarFormulario();
     }
@@ -35,6 +34,8 @@ class LeiloesTest {
         String valor = "500.00";
 
         this.leiloesPage = cadastroLeilaoPage.cadastrarLeilao(nome,valor,hoje);
+        leiloesPage.navigationLeiloes();
+
 
         Assert.assertTrue(leiloesPage.isLeilaoCadastrado(nome, valor, hoje));
     }

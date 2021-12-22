@@ -1,4 +1,4 @@
-package login;
+package br.com.alura.leilao.login;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -21,17 +21,17 @@ class LoginTest {
 
     @Test
     void deveriaEfetuarLoginComDadosValidos(){
-        loginPage.preencheFormularioDeLogin("fulano", "pass");
-        loginPage.efetuarLogin();
+        loginPage.efetuarLogin("fulano", "pass");
 
-        Assert.assertFalse(loginPage.isPaginaDeLogin());
-        Assert.assertEquals("fulano", loginPage.getNomeUsuarioLogado());
+        String nomeUsuarioLogado = loginPage.getNomeUsuarioLogado();
+
+        Assert.assertEquals("fulano", nomeUsuarioLogado);
+        Assert.assertFalse(loginPage.isPaginaAtual());
     }
 
     @Test
     void naoDeveriaEfetuarLoginComDadosInvalidos(){
-        loginPage.preencheFormularioDeLogin("invalido", "123");
-        loginPage.efetuarLogin();
+        loginPage.efetuarLogin("fulanoa", "pass");
 
         Assert.assertTrue(loginPage.isPaginaDeLoginComDadosInvalidos());
         Assert.assertNull(loginPage.getNomeUsuarioLogado());

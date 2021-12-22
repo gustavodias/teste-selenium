@@ -41,7 +41,7 @@ public class LanceController {
 			redirectAttributes.addFlashAttribute("error", "Lance invalido!");
 		}
 
-		String redirectURL = "redirect:/leiloes/" + lanceDto.getLeilaoId();
+		String redirectURL = "redirect:/br.com.alura.leilao.leiloes/" + lanceDto.getLeilaoId();
 		return new ModelAndView(redirectURL);
 	}
 

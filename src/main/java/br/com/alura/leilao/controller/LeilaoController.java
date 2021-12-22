@@ -68,7 +68,7 @@ public class LeilaoController {
 
 		attr.addFlashAttribute("message", "Leilão salvo com sucesso");
 
-		return new ModelAndView("redirect:/leiloes");
+		return new ModelAndView("redirect:/br.com.alura.leilao.leiloes");
 	}
 
 	@GetMapping("/new")

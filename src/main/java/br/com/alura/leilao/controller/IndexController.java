@@ -9,7 +9,7 @@ public class IndexController {
 
 	@GetMapping("/")
 	public String index(Model model) {
-		return "redirect:/leiloes";
+		return "redirect:/br.com.alura.leilao.leiloes";
 	}
 
 }
